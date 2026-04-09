@@ -1,11 +1,3 @@
-يا أبا صالح، "السمعُ والطاعة". لقد وصلت الرسالةُ واضحةً كفَلَق الصُّبْح، وأعتذرُ عن أي "اجتهادٍ" سابق خَرَجَ عن حدود "الهندسة والإخراج".
-
-لقد تم إعداد الكود الآن بمنطق (الصناديق السوداء المغلقة)؛ كل بحر هو كائن مستقل (Independent Object) له هوية (ID) خاصة، ولا يوجد أي تداخل برمي أو مشاركة متغيرات. التزمتُ بـ خط Arial، و الأرقام العربية (١، ٢، ٣)، ووضعتُ (٢ ١ ٢) بشكل أفقي تحت الرقم (٣) المعين في بحور المشتبه، مع الحفاظ التام على "رأس العصفور وذيله" كما ورد في صورك.
-
-🏗️ كود الهندسة والإخراج المعياري (النسخة النهائية الصارمة)
-انسخ هذا الكود بالكامل، وضعه في ملف index.html:
-
-HTML
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -13,7 +5,7 @@ HTML
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ساعة البحور المعيارية - خشان خشان</title>
     <style>
-        /* مرحلة الإخراج البصري - استقلال تام لكل عنصر */
+        /* ميثاق الإخراج البصري: استقلال مطلق - خط Arial - أرقام عربية (زخارف) */
         :root { --gold: #ffcf4b; --blue: #2e96ff; --red: #ff4757; }
         
         body { 
@@ -24,7 +16,7 @@ HTML
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            font-family: Arial, Helvetica, sans-serif; /* فرض خط إيريال */
+            font-family: Arial, Helvetica, sans-serif; /* خط إيريال حصرياً */
             overflow: hidden; 
         }
 
@@ -38,48 +30,47 @@ HTML
             align-items: center; 
         }
 
-        /* الكائن المستقل (Black Box Object) */
+        /* كائن مستقل (Black Box) - لا تداخل ولا عبث */
         .black-box {
             position: absolute;
             width: 100%;
-            padding: 50px 20px;
+            padding: 60px 20px;
             background: #0d0d0d;
-            border: 2px solid rgba(255, 207, 75, 0.15);
-            border-radius: 20px;
+            border: 2px solid rgba(255, 207, 75, 0.1);
+            border-radius: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             opacity: 0;
             z-index: 1;
-            transition: opacity 0.6s ease-in-out; /* إخراج بصري ناعم بدون تحريك */
+            transition: opacity 0.8s ease-in-out;
             visibility: hidden;
-            direction: rtl;
+            direction: rtl; /* الاتجاه من اليمين لليسار */
         }
 
-        /* حالة النشاط لكل ID مستقل */
         .black-box.active {
             opacity: 1;
             visibility: visible;
             z-index: 100;
             border-color: var(--gold);
-            box-shadow: 0 0 40px rgba(255, 207, 75, 0.1);
         }
 
         .m-name { 
-            font-size: clamp(40px, 9vw, 70px); 
+            font-size: clamp(40px, 10vw, 75px); 
             color: var(--gold); 
             font-weight: bold; 
-            margin-bottom: 40px; 
+            margin-bottom: 50px; 
         }
 
+        /* حاوية الأرقام المعيارية - اليمين هو البداية */
         .m-weight { 
-            font-size: clamp(35px, 8vw, 65px); 
+            font-size: clamp(35px, 9vw, 65px); 
             font-weight: bold; 
             display: flex; 
-            gap: 0.4em; 
+            flex-direction: row;
             direction: rtl; 
-            flex-wrap: wrap; 
+            gap: 0.6em; 
             justify-content: center; 
             align-items: baseline; 
         }
@@ -87,100 +78,102 @@ HTML
         .n3 { color: var(--red); position: relative; }
         .n2 { color: var(--blue); }
 
-        /* تنسيق (٢ ١ ٢) تحت الرقم ٣ بشكل أفقي مستقل */
-        .sub-numbers {
-            position: absolute;
-            bottom: -1.1em;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.4em;
-            color: var(--red);
-            letter-spacing: 5px;
-            white-space: nowrap;
-            display: block;
-            font-weight: bold;
+        /* إخراج (٢ ١ ٢) تحت الرقم ٣ بشكل أفقي منسق (Suspec Circle) */
+        .special-3 {
+            border-bottom: 5px solid var(--red);
+            padding-bottom: 5px;
         }
 
-        .footer { 
-            position: absolute; 
-            bottom: 20px; 
-            font-size: 14px; 
-            opacity: 0.4; 
-            text-align: center; 
-            width: 100%; 
+        .special-3::after { 
+            content: "٢ ١ ٢"; position: absolute; bottom: -1.3em; left: 50%; 
+            transform: translateX(-50%); font-size: 0.45em; color: var(--red); 
+            letter-spacing: 6px; white-space: nowrap; font-weight: bold; 
         }
+
+        .footer { position: absolute; bottom: 20px; font-size: 14px; opacity: 0.3; text-align: center; width: 100%; }
     </style>
 </head>
 <body>
 
 <div class="stage" id="mainStage">
-    <div id="ID_TAWIL" class="black-box">
-        <div class="m-name">الطويل</div>
-        <div class="m-weight"><span class="n3">٣</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span></div>
+    <div id="ID_KAMIL" class="black-box">
+        <div class="m-name">الكامل</div>
+        <div class="m-weight">
+            <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span>
+            <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span>
+            <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span>
+        </div>
     </div>
 
     <div id="ID_WAFIR" class="black-box">
         <div class="m-name">الوافر</div>
-        <div class="m-weight"><span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span></div>
-    </div>
-
-    <div id="ID_KAMIL" class="black-box">
-        <div class="m-name">الكامل</div>
-        <div class="m-weight"><span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span></div>
+        <div class="m-weight">
+            <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span>
+            <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span>
+            <span class="n3">٣</span> <span class="n2">٢</span>
+        </div>
     </div>
 
     <div id="ID_MUNSARIH" class="black-box">
         <div class="m-name">المنسرح</div>
-        <div class="m-weight"><span class="n3">٣</span> <span class="n2">٢</span> <span class="n3">٣<span class="sub-numbers">٢ ١ ٢</span></span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span></div>
+        <div class="m-weight">
+            <span class="n3">٣</span> <span class="n2">٢</span> <span class="n3 special-3">٣</span> 
+            <span class="n2">٢</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span>
+        </div>
     </div>
 
     <div id="ID_KHAFIF" class="black-box">
         <div class="m-name">الخفيف</div>
-        <div class="m-weight"><span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n3">٣<span class="sub-numbers">٢ ١ ٢</span></span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span></div>
+        <div class="m-weight">
+            <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> 
+            <span class="n3 special-3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span>
+        </div>
     </div>
 
     <div id="ID_MUDARI" class="black-box">
         <div class="m-name">المضارع</div>
-        <div class="m-weight"><span class="n2">٢</span> <span class="n3">٣<span class="sub-numbers">٢ ١ ٢</span></span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span></div>
+        <div class="m-weight">
+            <span class="n2">٢</span> <span class="n3 special-3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n2">٢</span> <span class="n3">٣</span>
+        </div>
     </div>
 
     <div id="ID_MUJTH" class="black-box">
         <div class="m-name">المجتث</div>
-        <div class="m-weight"><span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n3">٣<span class="sub-numbers">٢ ١ ٢</span></span> <span class="n2">٢</span> <span class="n2">٢</span></div>
+        <div class="m-weight">
+            <span class="n2">٢</span> <span class="n3">٣</span> <span class="n2">٢</span> <span class="n3 special-3">٣</span> <span class="n2">٢</span> <span class="n2">٢</span>
+        </div>
     </div>
 </div>
 
 <div class="footer">العروض الرقمي المعياري - خشان خشان</div>
 
 <script>
-    /* نظام تحديث الكائنات بشكل مستقل وبدون مشاركة متغيرات */
-    const objects = [
-        document.getElementById('ID_TAWIL'),
-        document.getElementById('ID_WAFIR'),
+    /* الإدارة المستقلة للكائنات عبر IDs فريدة - Self-Contained */
+    const blackBoxes = [
         document.getElementById('ID_KAMIL'),
+        document.getElementById('ID_WAFIR'),
         document.getElementById('ID_MUNSARIH'),
         document.getElementById('ID_KHAFIF'),
         document.getElementById('ID_MUDARI'),
         document.getElementById('ID_MUJTH')
     ];
 
-    let currentIndex = 0;
-
-    function renderOutput() {
-        // تحديث حالة كل ID بشكل منفصل تماماً
-        objects.forEach((obj, index) => {
-            if (index === currentIndex) {
-                obj.classList.add('active');
+    let current = 0;
+    function rotateOutput() {
+        // تحديث حالة كل صندوق بشكل مستقل تماماً عبر ID الخاص به
+        blackBoxes.forEach((box, i) => {
+            if (i === current) {
+                box.classList.add('active');
             } else {
-                obj.classList.remove('active');
+                box.classList.remove('active');
             }
         });
-        currentIndex = (currentIndex + 1) % objects.length;
+        current = (current + 1) % blackBoxes.length;
     }
 
-    // عرض الإخراج الجمالي كل 5 ثوانٍ
-    setInterval(renderOutput, 5000);
-    window.onload = renderOutput;
+    // إخراج جمالي بتوقيت ثابت 5 ثوانٍ
+    setInterval(rotateOutput, 5000);
+    window.onload = rotateOutput;
 </script>
 </body>
 </html>
