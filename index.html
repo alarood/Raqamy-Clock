@@ -1,204 +1,182 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>عرض مستقل</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ساعة البحور المعيارية - خشان خشان</title>
+    <style>
+        /* ميثاق الإخراج: استقلال مطلق - خط Arial - أرقام عربية */
+        :root { --gold: #ffcf4b; --blue: #2e96ff; --red: #ff4757; }
+        
+        body { 
+            background-color: #050505; 
+            color: white; 
+            margin: 0; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-family: Arial, Helvetica, sans-serif; /* خط إيريال حصرياً */
+            overflow: hidden; 
+        }
 
-<style>
-:root { --gold:#ffcf4b; --blue:#2e96ff; --red:#ff4757; }
+        .stage { position: relative; width: 95vw; height: 85vh; max-width: 900px; }
 
-body{
-    margin:0;
-    background:#050505;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    overflow:hidden;
-    font-family:Arial;
-}
+        /* كائن مستقل (Black Box) - سيادة كاملة لكل ID */
+        .black-box {
+            position: absolute;
+            width: 100%;
+            padding: 60px 20px;
+            background: #0d0d0d;
+            border: 2px solid rgba(255, 207, 75, 0.1);
+            border-radius: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            visibility: hidden;
+            direction: rtl; /* اتجاه اليمين العربي */
+        }
 
-.stage{
-    position:relative;
-    width:95vw;
-    height:85vh;
-}
+        .black-box.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 100;
+            border-color: var(--gold);
+            box-shadow: 0 0 50px rgba(255, 207, 75, 0.1);
+        }
 
-/* عنصر مستقل */
-.black-box{
-    position:absolute;
-    width:100%;
-    padding:60px 20px;
-    background:#0d0d0d;
-    border-radius:25px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    opacity:0;
-    transform:scale(0.9);
-    transition:all .8s ease;
-}
+        .m-name { 
+            font-size: clamp(40px, 10vw, 75px); 
+            color: var(--gold); 
+            font-weight: bold; 
+            margin-bottom: 50px; 
+        }
 
-/* تفعيل مستقل */
-.black-box.active{
-    opacity:1;
-    transform:scale(1);
-    box-shadow:0 0 40px rgba(255,207,75,.25);
-}
+        /* حاوية الأرقام: اليمين هو البداية (Row) */
+        .m-weight { 
+            font-size: clamp(35px, 9vw, 65px); 
+            font-weight: bold; 
+            display: flex; 
+            flex-direction: row; /* لضمان الترتيب من اليمين لليسار */
+            direction: rtl; 
+            gap: 0.5em; 
+            justify-content: center; 
+            align-items: baseline; 
+            font-family: Arial, sans-serif;
+        }
 
-.m-name{
-    color:var(--gold);
-    font-size:60px;
-    margin-bottom:40px;
-}
+        .n3 { color: var(--red); position: relative; }
+        .n2 { color: var(--blue); }
 
-.m-weight{
-    display:flex;
-    flex-direction:row-reverse;
-    gap:12px;
-    font-size:55px;
-}
+        /* إخراج الـ (٢ ١ ٢) تحت الرقم ٣ بشكل أفقي ومنسق */
+        .sub-group {
+            position: absolute;
+            bottom: -1.2em;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.45em;
+            color: var(--red);
+            letter-spacing: 5px;
+            white-space: nowrap;
+            font-weight: bold;
+        }
 
-.n2{color:var(--blue);}
-.n3{color:var(--red); position:relative;}
+        /* حركات مستقلة لكل كائن */
+        @keyframes floating {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        .active { animation: floating 4s infinite ease-in-out; }
 
-/* عنصر فرعي مستقل */
-.sub-group{
-    position:absolute;
-    bottom:-22px;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:18px;
-    color:var(--red);
-}
-
-/* خطوط التمييز (مستقلة لكل ID) */
-#ID_KAMIL .m-weight span:nth-child(3)::after,
-#ID_WAFIR .m-weight span:nth-child(3)::after{
-    content:"";
-    position:absolute;
-    bottom:-8px;
-    left:0;
-    right:0;
-    height:3px;
-    background:var(--red);
-}
-
-/* حركات مستقلة */
-@keyframes floatBox{
-    0%{transform:translateY(20px) scale(.9);}
-    50%{transform:translateY(0) scale(1);}
-    100%{transform:translateY(20px) scale(.9);}
-}
-
-#ID_KAMIL.active{animation:floatBox 6s infinite;}
-#ID_WAFIR.active{animation:floatBox 7s infinite;}
-#ID_MUNSARIH.active{animation:floatBox 8s infinite;}
-#ID_KHAFIF.active{animation:floatBox 6.5s infinite;}
-#ID_MUDARI.active{animation:floatBox 7.5s infinite;}
-#ID_MUJTH.active{animation:floatBox 6.8s infinite;}
-
-</style>
+        .footer { position: absolute; bottom: 20px; font-size: 14px; opacity: 0.3; text-align: center; width: 100%; }
+    </style>
 </head>
-
 <body>
 
 <div class="stage">
+    <div id="ID_KAMIL" class="black-box">
+        <div class="m-name">الكامل</div>
+        <div class="m-weight">
+            <span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+            <span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+            <span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+        </div>
+    </div>
 
-<div id="ID_KAMIL" class="black-box">
-<div class="m-name">الكامل</div>
-<div class="m-weight">
-<span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
-<span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
-<span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
-</div>
+    <div id="ID_WAFIR" class="black-box">
+        <div class="m-name">الوافر</div>
+        <div class="m-weight">
+            <span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
+            <span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
+            <span class="n3">٣</span><span class="n2">٢</span>
+        </div>
+    </div>
+
+    <div id="ID_MUNSARIH" class="black-box">
+        <div class="m-name">المنسرح</div>
+        <div class="m-weight">
+            <span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
+            <span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
+        </div>
+    </div>
+
+    <div id="ID_KHAFIF" class="black-box">
+        <div class="m-name">الخفيف</div>
+        <div class="m-weight">
+            <span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
+            <span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
+            <span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
+        </div>
+    </div>
+
+    <div id="ID_MUDARI" class="black-box">
+        <div class="m-name">المضارع</div>
+        <div class="m-weight">
+            <span class="n2">٢</span><span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
+            <span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+        </div>
+    </div>
+
+    <div id="ID_MUJTH" class="black-box">
+        <div class="m-name">المجتث</div>
+        <div class="m-weight">
+            <span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
+            <span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
+            <span class="n2">٢</span><span class="n2">٢</span>
+        </div>
+    </div>
 </div>
 
-<div id="ID_WAFIR" class="black-box">
-<div class="m-name">الوافر</div>
-<div class="m-weight">
-<span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
-<span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
-<span class="n3">٣</span><span class="n2">٢</span>
-</div>
-</div>
-
-<div id="ID_MUNSARIH" class="black-box">
-<div class="m-name">المنسرح</div>
-<div class="m-weight">
-<span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
-<span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
-</div>
-</div>
-
-<div id="ID_KHAFIF" class="black-box">
-<div class="m-name">الخفيف</div>
-<div class="m-weight">
-<span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
-<span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
-<span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
-</div>
-</div>
-
-<div id="ID_MUDARI" class="black-box">
-<div class="m-name">المضارع</div>
-<div class="m-weight">
-<span class="n2">٢</span><span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
-<span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
-</div>
-</div>
-
-<div id="ID_MUJTH" class="black-box">
-<div class="m-name">المجتث</div>
-<div class="m-weight">
-<span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
-<span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
-<span class="n2">٢</span><span class="n2">٢</span>
-</div>
-</div>
-
-</div>
+<div class="footer">العروض الرقمي المعياري - خشان خشان</div>
 
 <script>
-/* كل عنصر يعمل بشكل مستقل تماماً */
+    /* نظام الإدارة المستقلة: كل كائن يعمل في فضاء مغلق */
+    (function(){
+        const ids = ["ID_KAMIL", "ID_WAFIR", "ID_MUNSARIH", "ID_KHAFIF", "ID_MUDARI", "ID_MUJTH"];
+        let current = 0;
+        
+        function rotate() {
+            // تحديث حالة كل ID بشكل مستقل دون مشاركة متغيرات خارجية
+            ids.forEach((id, index) => {
+                const el = document.getElementById(id);
+                if (index === current) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+            current = (current + 1) % ids.length;
+        }
 
-(function(){
-    let el=document.getElementById("ID_KAMIL");
-    let state=false;
-    setInterval(()=>{state=!state; el.classList.toggle("active",state)},5000);
-})();
-
-(function(){
-    let el=document.getElementById("ID_WAFIR");
-    let state=false;
-    setInterval(()=>{state=!state; el.classList.toggle("active",state)},6000);
-})();
-
-(function(){
-    let el=document.getElementById("ID_MUNSARIH");
-    let state=false;
-    setInterval(()=>{state=!state; el.classList.toggle("active",state)},7000);
-})();
-
-(function(){
-    let el=document.getElementById("ID_KHAFIF");
-    let state=false;
-    setInterval(()=>{state=!state; el.classList.toggle("active",state)},8000);
-})();
-
-(function(){
-    let el=document.getElementById("ID_MUDARI");
-    let state=false;
-    setInterval(()=>{state=!state; el.classList.toggle("active",state)},9000);
-})();
-
-(function(){
-    let el=document.getElementById("ID_MUJTH");
-    let state=false;
-    setInterval(()=>{state=!state; el.classList.toggle("active",state)},10000);
-})();
+        setInterval(rotate, 5000);
+        window.onload = rotate;
+    })();
 </script>
 
 </body>
