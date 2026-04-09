@@ -1,4 +1,3 @@
-HTML
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,85 +5,95 @@ HTML
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ساعة البحور المعيارية - خشان خشان</title>
     <style>
+        /* مرحلة الهندسة والإخراج - نظام الكائنات المستقلة */
         :root { --gold: #ffcf4b; --blue: #2e96ff; --red: #ff4757; }
         body { background-color: #050505; color: white; margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
-        .clock-container { position: relative; width: 95vw; height: 95vw; max-width: 600px; max-height: 600px; display: flex; justify-content: center; align-items: center; }
-        .outer-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(255, 207, 75, 0.1); transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .meter-name { position: absolute; width: 80px; text-align: center; font-size: 13px; color: #444; transition: 0.5s; font-weight: bold; }
-        @media (max-width: 600px) { .meter-name { font-size: 10px; width: 60px; } .current-title { font-size: 32px !important; } .digital-weight { font-size: 35px !important; } }
-        .meter-name.active { color: var(--gold); font-size: 1.3em; text-shadow: 0 0 15px var(--gold); }
-        .center-box { text-align: center; z-index: 10; width: 100%; }
-        .current-title { font-size: 55px; color: var(--gold); margin-bottom: 15px; font-weight: 900; }
-        .digital-weight { font-size: 50px; font-weight: bold; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .n3 { color: var(--red); text-shadow: 0 0 10px var(--red); }
-        .n2 { color: var(--blue); text-shadow: 0 0 10px var(--blue); }
-        .hababy { text-decoration: underline; text-decoration-thickness: 5px; text-underline-offset: 6px; }
-        .footer-name { position: absolute; bottom: 20px; color: rgba(255,255,255,0.2); font-size: 12px; }
+        
+        .stage { position: relative; width: 90vw; height: 80vh; max-width: 800px; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
+
+        /* الصندوق الأسود المستقل (Black Box) - استجابة للأبعاد */
+        .meter-box {
+            position: absolute;
+            width: 95%; /* مستجيب لعرض الشاشة */
+            height: auto;
+            min-height: 200px;
+            padding: 20px;
+            background: linear-gradient(145deg, #0d0d0d, #151515);
+            border: 2px solid rgba(255, 207, 75, 0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            transform: scale(0.9);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            visibility: hidden;
+        }
+
+        /* حالة الظهور (Active) - لا يوجد تقدم أو تأخر */
+        .meter-box.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 100;
+            transform: scale(1);
+            border-color: var(--gold);
+            box-shadow: 0 0 40px rgba(255, 207, 75, 0.05);
+        }
+
+        /* تنسيق الخطوط المستجيب للأبعاد */
+        .m-name { font-size: 8vw; color: var(--gold); font-weight: 900; margin-bottom: 20px; }
+        .m-weight { font-size: 6vw; font-weight: bold; display: flex; gap: 3vw; direction: ltr; flex-wrap: wrap; justify-content: center; align-items: baseline; }
+
+        @media (min-width: 768px) {
+            .m-name { font-size: 60px; }
+            .m-weight { font-size: 50px; gap: 20px; }
+        }
+
+        .n3 { color: var(--red); position: relative; }
+        .n2 { color: var(--blue); }
+        .hababy { text-decoration: underline; text-decoration-thickness: 5px; text-underline-offset: 10px; }
+        
+        /* إخراج الـ ٢ ١ ٢ تحت الـ ٣ المعينة */
+        .special-3::after { 
+            content: "٢ ١ ٢"; position: absolute; bottom: -40px; left: 50%; 
+            transform: translateX(-50%); font-size: 0.4em; color: var(--red); 
+            letter-spacing: 2px; font-weight: bold; 
+        }
+
+        .footer { position: absolute; bottom: 20px; font-size: 12px; opacity: 0.2; text-align: center; width: 100%; }
     </style>
 </head>
 <body>
-<div class="clock-container">
-    <div class="outer-ring" id="ring"></div>
-    <div class="center-box">
-        <div id="mName" class="current-title">جاري التحميل...</div>
-        <div id="mWeight" class="digital-weight"></div>
-    </div>
+
+<div class="stage" id="mainStage">
+    <div id="BOX_1" class="meter-box"><div class="m-name">الطويل</div><div class="m-weight"><span class="n3">3</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2">2</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2">2</span> <span class="n2">2</span></div></div>
+    <div id="BOX_2" class="meter-box"><div class="m-name">الوافر</div><div class="m-weight"><span class="n3">3</span> <span class="n2 hababy">2</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2 hababy">2</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2">2</span></div></div>
+    <div id="BOX_3" class="meter-box"><div class="m-name">الكامل</div><div class="m-weight"><span class="n2 hababy">2</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2 hababy">2</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2 hababy">2</span> <span class="n2">2</span> <span class="n3">3</span></div></div>
+    <div id="BOX_4" class="meter-box"><div class="m-name">المنسرح</div><div class="m-weight"><span class="n3">3</span> <span class="n2">2</span> <span class="n3 hababy special-3">3</span> <span class="n2">2</span> <span class="n2">2</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2">2</span> <span class="n2">2</span></div></div>
+    <div id="BOX_5" class="meter-box"><div class="m-name">الخفيف</div><div class="m-weight"><span class="n2">2</span> <span class="n3">3</span> <span class="n2">2</span> <span class="n3 hababy special-3">3</span> <span class="n2">2</span> <span class="n2">2</span> <span class="n2">2</span> <span class="n3">3</span> <span class="n2">2</span></div></div>
+    <div id="BOX_6" class="meter-box"><div class="m-name">المضارع</div><div class="m-weight"><span class="n2">2</span> <span class="n3 hababy special-3">3</span> <span class="n2">2</span> <span class="n2">2</span> <span class="n2">2</span> <span class="n3">3</span></div></div>
+    <div id="BOX_7" class="meter-box"><div class="m-name">المجتث</div><div class="m-weight"><span class="n2">2</span> <span class="n3">3</span> <span class="n2">2</span> <span class="n3 hababy special-3">3</span> <span class="n2">2</span> <span class="n2">2</span></div></div>
 </div>
-<div class="footer-name">العروض الرقمي المعياري - خشان خشان</div>
+
+<div class="footer">العروض الرقمي - الهندسة والإخراج المعياري - خشان خشان</div>
+
 <script>
-    const buhoor = [
-        { name: "الطويل", weight: "3 2 3 2 2 3 2 3 2 2" },
-        { name: "المديد", weight: "2 3 2 2 3 2 3 2" },
-        { name: "البسيط", weight: "2 2 3 2 3 2 2 3 2 3" },
-        { name: "الوافر", weight: "3 (2) 2 3 (2) 2 3 2" },
-        { name: "الكامل", weight: "(2) 2 3 (2) 2 3 (2) 2 3" },
-        { name: "الهزج", weight: "3 2 2 3 2 2" },
-        { name: "الرجز", weight: "2 2 3 2 2 3 2 2 3" },
-        { name: "الرمل", weight: "2 3 2 2 3 2 2 3 2" },
-        { name: "المنسرح", weight: "2 2 3 2 3 2 3 2" },
-        { name: "الخفيف", weight: "2 3 2 2 3 2 2 3 2" },
-        { name: "المضارع", weight: "3 2 2 3 2 3 2" },
-        { name: "المقتضب", weight: "2 2 3 2 2 3 2" },
-        { name: "المجتث", weight: "2 3 2 2 3 2 3 2" },
-        { name: "المتقارب", weight: "3 2 3 2 3 2 3 2" },
-        { name: "المتدارك", weight: "2 3 2 3 2 3 2 3" }
-    ];
+    // هندسة العرض المستقل
+    const boxes = document.querySelectorAll('.meter-box');
     let current = 0;
-    const ring = document.getElementById('ring');
-    function init() {
-        const container = document.querySelector('.clock-container');
-        const radius = container.offsetWidth / 2.3;
-        buhoor.forEach((b, i) => {
-            const angle = (i * (360 / buhoor.length));
-            const el = document.createElement('div');
-            el.className = 'meter-name'; el.id = 'b-' + i; el.innerText = b.name;
-            const x = radius * Math.cos((angle - 90) * Math.PI / 180) + (container.offsetWidth / 2) - 40;
-            const y = radius * Math.sin((angle - 90) * Math.PI / 180) + (container.offsetHeight / 2) - 10;
-            el.style.left = x + 'px'; el.style.top = y + 'px';
-            ring.appendChild(el);
-        });
-        update(); setInterval(next, 4000);
+
+    function runRotation() {
+        boxes.forEach(box => box.classList.remove('active'));
+        boxes[current].classList.add('active');
+        current = (current + 1) % boxes.length;
     }
-    function update() {
-        const rotation = - (current * (360 / buhoor.length));
-        ring.style.transform = `rotate(${rotation}deg)`;
-        document.querySelectorAll('.meter-name').forEach((el, i) => {
-            el.classList.toggle('active', i === current);
-            el.style.transform = `rotate(${-rotation}deg)`;
-        });
-        const active = buhoor[current];
-        document.getElementById('mName').innerText = active.name;
-        let html = '';
-        active.weight.split(' ').forEach(n => {
-            let cls = (n.includes('3')) ? 'n3' : 'n2';
-            let content = n.replace('(', '').replace(')', '');
-            let extra = (n.includes('(')) ? 'hababy' : '';
-            html += `<span class="${cls} ${extra}">${content}</span>`;
-        });
-        document.getElementById('mWeight').innerHTML = html;
-    }
-    function next() { current = (current + 1) % buhoor.length; update(); }
-    window.onload = init;
+
+    // الانتقال كل 4.5 ثانية (بدون حركة خلفية)
+    setInterval(runRotation, 4500);
+    window.onload = runRotation;
 </script>
 </body>
 </html>
