@@ -5,41 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ساعة البحور المعيارية - خشان خشان</title>
 <style>
-/* ميثاق الجمال والوقار: أحجام رشيقة - استقلال - اتجاه عربي */
+/* ميثاق السيادة: استقلال مطلق - Arial - أبعاد رشيقة */
 :root { --gold:#ffcf4b; --blue:#2e96ff; --red:#ff4757; }
 body { margin:0; background:#050505; display:flex; justify-content:center; align-items:center; height:100vh; overflow:hidden; font-family:Arial, sans-serif; }
 
-.stage { position:relative; width:90vw; height:70vh; max-width:700px; }
+.stage { position:relative; width:95vw; height:80vh; max-width:850px; }
 
+/* الكائن المستقل (Independent Object) - الصندوق الأسود */
 .black-box {
-    position:absolute; width:100%; padding:40px 0; background:#0d0d0d; border-radius:15px;
+    position:absolute; width:100%; padding:50px 0; background:#0d0d0d; border-radius:20px;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    opacity:0; visibility:hidden; transition:opacity 1s ease-in-out; /* ظهور هادئ بدون تحريك */
+    opacity:0; visibility:hidden; transition:opacity 0.8s ease-in-out;
 }
 .black-box.active { opacity:1; visibility:visible; border:1px solid rgba(255,207,75,0.1); }
 
-/* تصغير العناوين للأناقة */
-.m-name { color:var(--gold); font-size:38px; margin-bottom:25px; font-weight:bold; }
+.m-name { color:var(--gold); font-size:45px; margin-bottom:35px; font-weight:bold; }
 
-/* تصغير الأوزان لتناسب جميع الشاشات */
+/* هندسة التراصّ والاتجاه من اليمين (Row) */
 .m-weight { 
-    display:flex; flex-direction:row-reverse; direction:rtl; 
-    font-size:34px; font-weight:bold; gap:10px;
+    display:flex; flex-direction:row; direction:rtl; 
+    font-size:40px; font-weight:bold; gap:12px;
 }
 
 .n2 { color:var(--blue); position:relative; }
 .n3 { color:var(--red); position:relative; }
 
-/* الخط المعياري تحت أول ٢ من زمرة (٢ ٢) */
-.u-line { border-bottom: 3px solid var(--blue); padding-bottom: 2px; }
+/* الخط المعياري تحت أول ٢ من اليمين في زمرة (٢ ٢) في الكامل والوافر */
+.u-line { border-bottom: 4px solid var(--blue); padding-bottom: 3px; }
 
-/* وحدة الـ (٢ ١ ٢) تحت الرقم ٣ */
+/* الخط الأحمر تحت الـ ٣ المعينة في المشتبه */
+.u-red { border-bottom: 4px solid var(--red); padding-bottom: 3px; }
+
+/* وحدة (٢ ١ ٢) الأفقية المستقلة */
 .sub-group {
-    position:absolute; bottom:-20px; left:50%; transform:translateX(-50%);
-    font-size:14px; color:var(--red); letter-spacing:3px; white-space:nowrap;
+    position:absolute; bottom:-25px; left:50%; transform:translateX(-50%);
+    font-size:16px; color:var(--red); letter-spacing:4px; white-space:nowrap;
 }
 
-.footer { position:absolute; bottom:15px; font-size:12px; opacity:0.3; text-align:center; width:100%; }
+.footer { position:absolute; bottom:20px; font-size:14px; opacity:0.3; text-align:center; width:100%; }
 </style>
 </head>
 <body>
@@ -64,39 +67,33 @@ body { margin:0; background:#050505; display:flex; justify-content:center; align
 </div>
 </div>
 
-<div id="ID_KHAFIF" class="black-box">
-<div class="m-name">الخفيف</div>
-<div class="m-weight">
-<span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
-<span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
-<span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
-</div>
-</div>
-
 <div id="ID_MUNSARIH" class="black-box">
 <div class="m-name">المنسرح</div>
 <div class="m-weight">
-<span class="n3">٣</span><span class="n2">٢</span>
-<span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
+<span class="n3">٣</span><span class="n2">٢</span><span class="n3 u-red">٣<span class="sub-group">٢ ١ ٢</span></span>
 <span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
+</div>
+</div>
+
+<div id="ID_KHAFIF" class="black-box">
+<div class="m-name">الخفيف</div>
+<div class="m-weight">
+<span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3 u-red">٣<span class="sub-group">٢ ١ ٢</span></span>
+<span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
 </div>
 </div>
 
 <div id="ID_MUDARI" class="black-box">
 <div class="m-name">المضارع</div>
 <div class="m-weight">
-<span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span>
-<span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
-<span class="n2">٢</span>
+<span class="n2">٢</span><span class="n3 u-red">٣<span class="sub-group">٢ ١ ٢</span></span><span class="n2">٢</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
 </div>
 </div>
 
 <div id="ID_MUJTH" class="black-box">
 <div class="m-name">المجتث</div>
 <div class="m-weight">
-<span class="n2">٢</span><span class="n2">٢</span>
-<span class="n3">٣<span class="sub-group">٢ ١ ٢</span></span>
-<span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
+<span class="n2">٢</span><span class="n2">٢</span><span class="n3 u-red">٣<span class="sub-group">٢ ١ ٢</span></span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span>
 </div>
 </div>
 
@@ -106,15 +103,15 @@ body { margin:0; background:#050505; display:flex; justify-content:center; align
 
 <script>
 (function(){
-    const boxes = ["ID_KAMIL", "ID_WAFIR", "ID_KHAFIF", "ID_MUNSARIH", "ID_MUDARI", "ID_MUJTH"];
+    const boxes = ["ID_KAMIL", "ID_WAFIR", "ID_MUNSARIH", "ID_KHAFIF", "ID_MUDARI", "ID_MUJTH"];
     let i = 0;
-    function show() {
+    function render() {
         boxes.forEach(id => document.getElementById(id).classList.remove('active'));
         document.getElementById(boxes[i]).classList.add('active');
         i = (i + 1) % boxes.length;
     }
-    show();
-    setInterval(show, 5000); // عرض كل بحر لمدة 5 ثوانٍ بهدوء
+    render();
+    setInterval(render, 5000);
 })();
 </script>
 </body>
