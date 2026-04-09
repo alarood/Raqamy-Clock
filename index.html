@@ -5,32 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ساعة البحور المعيارية - خشان خشان</title>
 <style>
-/* ميثاق السيادة: استقلال مطلق - Arial - أبعاد وقورة */
 :root { --gold:#ffcf4b; --blue:#2e96ff; --red:#ff4757; }
 body { margin:0; background:#050505; display:flex; justify-content:center; align-items:center; height:100vh; overflow:hidden; font-family:Arial, sans-serif; }
+.stage { position:relative; width:95vw; height:75vh; max-width:850px; }
 
-.stage { position:relative; width:90vw; height:70vh; max-width:850px; }
-
-/* الكائن المستقل (Black Box) */
+/* كائن مستقل - تلاشي هادئ في نفس المكان */
 .black-box {
     position:absolute; width:100%; padding:50px 20px; background:#0d0d0d; border-radius:15px;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    opacity:0; visibility:hidden; transition:opacity 1s ease-in-out;
-    box-sizing: border-box;
+    opacity:0; visibility:hidden; transition:opacity 0.8s ease-in-out; box-sizing: border-box;
 }
 .black-box.active { opacity:1; visibility:visible; border:1px solid rgba(255,207,75,0.1); }
 
-.m-name { color:var(--gold); font-size:42px; margin-bottom:35px; font-weight:bold; }
+.m-name { color:var(--gold); font-size:42px; margin-bottom:30px; font-weight:bold; }
+.m-weight { display:flex; flex-direction:row; direction:rtl; font-size:36px; font-weight:bold; gap:12px; }
 
-/* تنسيق الأرقام (الكامل والوافر) */
-.m-weight { display:flex; flex-direction:row; direction:rtl; font-size:38px; font-weight:bold; gap:10px; }
 .n2 { color:var(--blue); position:relative; }
 .n3 { color:var(--red); position:relative; }
 .u-line { border-bottom: 4px solid var(--blue); padding-bottom: 3px; }
 
-/* تنسيق الجملة البديلة (للبحور الأربعة) */
-.m-note { color:white; font-size:24px; text-align:center; line-height:1.6; max-width:90%; }
-
+.m-note { color:white; font-size:22px; text-align:center; line-height:1.6; max-width:90%; }
 .footer { position:absolute; bottom:15px; font-size:12px; opacity:0.3; text-align:center; width:100%; }
 </style>
 </head>
@@ -38,12 +32,27 @@ body { margin:0; background:#050505; display:flex; justify-content:center; align
 
 <div class="stage">
 
-<div id="ID_KAMIL" class="black-box">
-    <div class="m-name">الكامل</div>
+<div id="ID_TAWIL" class="black-box">
+    <div class="m-name">الطويل</div>
     <div class="m-weight">
-        <span class="n2 u-line">٢</span><span class="n2">٢</span><span class="n3">٣</span>
-        <span class="n2 u-line">٢</span><span class="n2">٢</span><span class="n3">٣</span>
-        <span class="n2 u-line">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+        <span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
+        <span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span>
+    </div>
+</div>
+
+<div id="ID_MADID" class="black-box">
+    <div class="m-name">المديد</div>
+    <div class="m-weight">
+        <span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+        <span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+    </div>
+</div>
+
+<div id="ID_BASIT" class="black-box">
+    <div class="m-name">البسيط</div>
+    <div class="m-weight">
+        <span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span>
+        <span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span>
     </div>
 </div>
 
@@ -54,6 +63,39 @@ body { margin:0; background:#050505; display:flex; justify-content:center; align
         <span class="n3">٣</span><span class="n2 u-line">٢</span><span class="n2">٢</span>
         <span class="n3">٣</span><span class="n2">٢</span>
     </div>
+</div>
+
+<div id="ID_KAMIL" class="black-box">
+    <div class="m-name">الكامل</div>
+    <div class="m-weight">
+        <span class="n2 u-line">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+        <span class="n2 u-line">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+        <span class="n2 u-line">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+    </div>
+</div>
+
+<div id="ID_HAZAJ" class="black-box">
+    <div class="m-name">الهزج</div>
+    <div class="m-weight"><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span></div>
+</div>
+
+<div id="ID_RAJAZ" class="black-box">
+    <div class="m-name">الرجز</div>
+    <div class="m-weight">
+        <span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+        <span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+        <span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span>
+    </div>
+</div>
+
+<div id="ID_RAMAL" class="black-box">
+    <div class="m-name">الرمل</div>
+    <div class="m-weight"><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span></div>
+</div>
+
+<div id="ID_SARI" class="black-box">
+    <div class="m-name">السريع</div>
+    <div class="m-weight"><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span></div>
 </div>
 
 <div id="ID_MUNSARIH" class="black-box">
@@ -76,20 +118,33 @@ body { margin:0; background:#050505; display:flex; justify-content:center; align
     <div class="m-note">يراجع الجدول لتعذر تمثيل التوأمين الوتديين</div>
 </div>
 
+<div id="ID_MUQARIB" class="black-box">
+    <div class="m-name">المتقارب</div>
+    <div class="m-weight"><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span></div>
+</div>
+
+<div id="ID_MUTADARAK" class="black-box">
+    <div class="m-name">المتدارك</div>
+    <div class="m-weight"><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span><span class="n2">٢</span><span class="n3">٣</span></div>
+</div>
+
 </div>
 
 <div class="footer">العروض الرقمي المعياري - خشان خشان</div>
 
 <script>
 (function(){
-    const b = ["ID_KAMIL", "ID_WAFIR", "ID_MUNSARIH", "ID_KHAFIF", "ID_MUDARI", "ID_MUJTH"];
+    const b = ["ID_TAWIL", "ID_MADID", "ID_BASIT", "ID_WAFIR", "ID_KAMIL", "ID_HAZAJ", "ID_RAJAZ", "ID_RAMAL", "ID_SARI", "ID_MUNSARIH", "ID_KHAFIF", "ID_MUDARI", "ID_MUJTH", "ID_MUQARIB", "ID_MUTADARAK"];
     let c = 0;
     function r() {
-        b.forEach(id => document.getElementById(id).classList.remove('active'));
+        b.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.classList.remove('active');
+        });
         document.getElementById(b[c]).classList.add('active');
         c = (c + 1) % b.length;
     }
-    r(); setInterval(r, 6000); // ٦ ثوانٍ لكل بحر ليتسنى قراءة الجملة
+    r(); setInterval(r, 6000);
 })();
 </script>
 </body>
