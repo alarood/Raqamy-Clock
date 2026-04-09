@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ساعة البحور الرقمية - خشان خشان</title>
+    <style>
+        :root { --gold: #ffcf4b; --blue: #2e96ff; --red: #ff4757; }
+        body { background-color: #050505; color: white; margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
+        .clock-container { position: relative; width: 90vw; height: 90vw; max-width: 500px; max-height: 500px; display: flex; justify-content: center; align-items: center; }
+        .outer-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(255, 207, 75, 0.1); transition: transform 1s cubic-bezier(0.65, 0, 0.35, 1); }
+        .meter-name { position: absolute; width: 80px; text-align: center; font-size: 14px; color: #555; transition: 0.5s; }
+        @media (max-width: 600px) { .meter-name { font-size: 11px; width: 60px; } .current-title { font-size: 32px !important; } .digital-weight { font-size: 40px !important; } }
+        .meter-name.active { color: var(--gold); font-weight: bold; font-size: 1.2em; text-shadow: 0 0 15px var(--gold); }
+        .center-box { text-align: center; z-index: 10; }
+        .current-title { font-size: 48px; color: var(--gold); margin-bottom: 10px; font-weight: 900; }
+        .digital-weight { font-size: 60px; font-weight: bold; display: flex; gap: 15px; justify-content: center; }
+        .n3 { color: var(--red); text-shadow: 0 0 20px var(--red); }
+        .n2 { color: var(--blue); text-shadow: 0 0 20px var(--blue); }
+        .footer-name { position: absolute; bottom: 20px; color: rgba(255,255,255,0.2); font-size: 12px; }
+    </style>
+</head>
+<body>
+<div class="clock-container">
+    <div class="outer-ring" id="ring"></div>
+    <div class="center-box">
+        <div id="mName" class="current-title">الطويل</div>
+        <div id="mWeight" class="digital-weight"></div>
+    </div>
+</div>
+<div class="footer-name">العروض الرقمي المعياري - خشان خشان</div>
+<script>
+    const buhoor = [
+        { name: "الطويل", weight: "3 2 3 2 2 3 2 3 2 2" },
+        { name: "المديد", weight: "2 3 2 2 3 2 3 2" },
+        { name: "البسيط", weight: "2 2 3 2 3 2 2 3 2 3" },
+        { name: "الوافر", weight: "3 2 2 3 2 2 3" },
+        { name: "الكامل", weight: "2 2 3 2 2 3 2 2 3" },
+        { name: "الهزج", weight: "3 2 2 3 2 2" },
+        { name: "الرجز", weight: "2 2 3 2 2 3 2 2 3" },
+        { name: "الرمل", weight: "2 3 2 2 3 2 2 3 2" },
+        { name: "المتقارب", weight: "3 2 3 2 3 2 3 2" },
+        { name: "المتدارك", weight: "2 3 2 3 2 3 2 3" }
+    ];
+    let current = 0;
+    const ring = document.getElementById('ring');
+    function init() {
+        const container = document.querySelector('.clock-container');
+        const radius = container.offsetWidth / 2.3;
+        buhoor.forEach((b, i) => {
+            const angle = (i * (360 / buhoor.length));
+            const el = document.createElement('div');
+            el.className = 'meter-name'; el.id = 'b-' + i; el.innerText = b.name;
+            const x = radius * Math.cos((angle - 90) * Math.PI / 180) + (container.offsetWidth / 2) - 40;
+            const y = radius * Math.sin((angle - 90) * Math.PI / 180) + (container.offsetHeight / 2) - 10;
+            el.style.left = x + 'px'; el.style.top = y + 'px';
+            ring.appendChild(el);
+        });
+        update(); setInterval(next, 4000);
+    }
+    function update() {
+        const rotation = - (current * (360 / buhoor.length));
+        ring.style.transform = `rotate(${rotation}deg)`;
+        document.querySelectorAll('.meter-name').forEach((el, i) => {
+            el.classList.toggle('active', i === current);
+            el.style.transform = `rotate(${-rotation}deg)`;
+        });
+        const active = buhoor[current];
+        document.getElementById('mName').innerText = active.name;
+        let html = '';
+        active.weight.split(' ').forEach(n => {
+            let cls = (n === '3') ? 'n3' : 'n2';
+            html += `<span class="${cls}">${n}</span>`;
+        });
+        document.getElementById('mWeight').innerHTML = html;
+    }
+    function next() { current = (current + 1) % buhoor.length; update(); }
+    window.onload = init;
+</script>
+</body>
+</html>
